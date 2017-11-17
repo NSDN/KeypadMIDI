@@ -8,11 +8,11 @@ void setup() {
 
 void loop() {
     if (Serial.available() > 0) {
-        char key = Serial.read();
+        byte tag = Serial.read();
 
-        if ((key & 0x80) == 0)
-            Keyboard.press(key & 0x7F);
-        else
-            Keyboard.release(key & 0x7F);
+        if (tag == 0xFF)
+            Keyboard.press(Serial.read());
+        else if (tag == 0x00)
+            Keyboard.release(Serial.read());
     }
 }
